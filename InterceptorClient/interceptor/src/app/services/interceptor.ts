@@ -19,6 +19,7 @@ export class Interceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(catchError((error, caught) => {
+        console.log(error);
         return this.handleReqError(error);
     }) as any);
   }

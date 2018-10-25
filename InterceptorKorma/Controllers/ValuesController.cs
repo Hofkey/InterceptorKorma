@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+using System.Web.Http.Results;
+using System.Web.Mvc;
 
 namespace InterceptorKorma.Controllers
 {
     public class ValuesController : ApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+        public object Get()
         {
-            return new string[] { "value1", "value2" };
+            return new ResponseMessageResult(
+                Request.CreateErrorResponse(
+                    (HttpStatusCode)433,
+                    new HttpError("oy vey goyim")
+                    )
+                );
         }
 
         // GET api/values/5

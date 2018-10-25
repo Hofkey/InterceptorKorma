@@ -11,6 +11,7 @@ import { ThrowStmt } from '@angular/compiler';
 export class ErrorDialogComponent implements OnInit {
 
   error: HttpErrorResponse;
+  errorTitle: string;
   errorMsg: string;
 
   constructor(public dialogRef: MatDialogRef<ErrorDialogComponent>,
@@ -22,15 +23,28 @@ export class ErrorDialogComponent implements OnInit {
     switch (this.error.status) {
       case 404:
         this.errorMsg = 'De volgende pagina bestaat niet:\n' + this.error.url;
+        this.errorTitle = this.error.statusText;
         break;
       default:
-        this.errorMsg = this.error.message;
+        this.fillContents(this.error);
         break;
     }
   }
 
   onClose() {
     this.dialogRef.close();
+  }
+
+  fillContents(error: any) {
+    if (this.error.statusText === 'OK') {
+      if (this.error.status !== 200) {
+        this.errorTitle = 'FOUT';
+      }
+      this.errorMsg = this.error.error.Message;
+    } else {
+      this.errorTitle = this.error.statusText;
+      this.errorMsg = this.error.message;
+    }
   }
 
 }

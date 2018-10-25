@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class GenericService {
@@ -8,7 +8,9 @@ export class GenericService {
   }
 
   get(): Promise<any[]> {
-    return this.http.get<any[]>('http://localhost:4200/wwww', { responseType: 'json' })
+    //const headers = new HttpHeaders({'conent-type' : 'application/json', 'Access-Control-Allow-Origin' : '*'});
+
+    return this.http.get<any[]>('http://localhost:50040/api/values', { responseType: 'json'})
                     .toPromise()
                     .then(data => data);
   }
