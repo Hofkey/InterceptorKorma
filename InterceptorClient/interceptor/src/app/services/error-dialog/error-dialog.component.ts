@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ThrowStmt } from '@angular/compiler';
+import { ErrorModel } from './errorModel';
 
 @Component({
   selector: 'app-error-dialog',
@@ -10,9 +11,7 @@ import { ThrowStmt } from '@angular/compiler';
 })
 export class ErrorDialogComponent implements OnInit {
 
-  error: HttpErrorResponse;
-  errorTitle: string;
-  errorMsg: string;
+  error: ErrorModel;
 
   constructor(public dialogRef: MatDialogRef<ErrorDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public _error: any) {
@@ -20,31 +19,10 @@ export class ErrorDialogComponent implements OnInit {
               }
 
   ngOnInit() {
-    switch (this.error.status) {
-      case 404:
-        this.errorMsg = 'De volgende pagina bestaat niet:\n' + this.error.url;
-        this.errorTitle = this.error.statusText;
-        break;
-      default:
-        this.fillContents(this.error);
-        break;
-    }
   }
 
   onClose() {
     this.dialogRef.close();
-  }
-
-  fillContents(error: any) {
-    if (this.error.statusText === 'OK') {
-      if (this.error.status !== 200) {
-        this.errorTitle = 'FOUT';
-      }
-      this.errorMsg = this.error.error.Message;
-    } else {
-      this.errorTitle = this.error.statusText;
-      this.errorMsg = this.error.message;
-    }
   }
 
 }

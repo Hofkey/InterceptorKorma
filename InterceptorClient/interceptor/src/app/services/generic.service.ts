@@ -8,9 +8,10 @@ export class GenericService {
   }
 
   get(): Promise<any[]> {
-    //const headers = new HttpHeaders({'conent-type' : 'application/json', 'Access-Control-Allow-Origin' : '*'});
+    const headers = new HttpHeaders({'conent-type' : 'application/json'});
 
-    return this.http.get<any[]>('http://localhost:50040/api/values', { responseType: 'json'})
+
+    return this.http.post<any[]>('http://localhost:61973/InterceptorService.asmx/HelloWorld', { headers: headers})
                     .toPromise()
                     .then(data => data);
   }
